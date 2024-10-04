@@ -755,6 +755,7 @@ function selectPerson(person) {
     addButton.style.display = 'block';  
     if (!turnoSelect.disabled) return; 
 
+   
     turnoSelect.disabled = false;
     fechaInput.disabled = false;
 }
@@ -823,48 +824,19 @@ function removeEntry(index) {
     renderAddedList();
 }
 
-function sendToGoogleSheets(data) {
-    fetch('https://cors-anywhere.herokuapp.com/https://script.google.com/macros/s/AKfycbyyXVxHU88Nk24zHB5SxaAPw1tekO82y19dD8DeJyH-aGdk8nNza4bxkzZNzqIXK-dokw/exec', {
-        method: 'POST',
-        body: JSON.stringify(data),
-        headers: {
-            'Content-Type': 'application/json'
-        }
-    })
-    .then(response => {
-        if (!response.ok) {
-            throw new Error('Network response was not ok');
-        }
-        return response.json();
-    })
-    .then(result => {
-        console.log('Success:', result);
-        alert('Datos guardados con éxito!');
-    })
-    .catch(error => {
-        console.error('Error:', error);
-        alert('Error al guardar los datos.');
-    });
-}
-
 function guardarDatos() {
     if (addedPeople.length === 0) {
         alert('No hay datos para guardar.');
         return;
     }
 
-    addedPeople.forEach(entry => {
-        const dataToSend = {
-            grado: entry.Grado,
-            nombre: entry.Nombre,
-            apellido: entry.Apellido,
-            ci: entry["C.I"],
-            movil: entry.Movil,
-            fecha: entry.Fecha,
-            turno: entry.Turno
-        };
-        sendToGoogleSheets(dataToSend);
+    const ws = XLSX.utils.json_to_sheet(addedPeople, {
+        header: ["Grado", "Nombre", "Apellido", "C.I", "Movil", "Fecha", "Turno"]
     });
+    const wb = XLSX.utils.book_new();
+    XLSX.utils.book_append_sheet(wb, ws, "Turnos");
+
+    XLSX.writeFile(wb, 'turnos.xlsx');
 }
 
 searchButton.addEventListener('click', searchNames);
