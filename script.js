@@ -824,6 +824,29 @@ function removeEntry(index) {
     renderAddedList();
 }
 
+function sendToGoogleSheets(data) {
+    fetch('https://cors-anywhere.herokuapp.com/https://script.google.com/macros/s/AKfycbyyXVxHU88Nk24zHB5SxaAPw1tekO82y19dD8DeJyH-aGdk8nNza4bxkzZNzqIXK-dokw/exec', {
+        method: 'POST',
+        body: JSON.stringify(data),
+        headers: {
+            'Content-Type': 'application/json'
+        }
+    })
+    .then(response => {
+        if (!response.ok) {
+            throw new Error('Network response was not ok');
+        }
+        return response.json();
+    })
+    .then(result => {
+        console.log('Success:', result);
+        alert('Datos guardados con éxito!');
+    })
+    .catch(error => {
+        console.error('Error:', error);
+        alert('Error al guardar los datos.');
+    });
+}
 function guardarDatos() {
     if (addedPeople.length === 0) {
         alert('No hay datos para guardar.');
