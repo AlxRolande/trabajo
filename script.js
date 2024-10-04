@@ -824,7 +824,7 @@ function removeEntry(index) {
 }
 
 function sendToGoogleSheets(data) {
-    fetch('https://script.google.com/macros/s/AKfycbyyXVxHU88Nk24zHB5SxaAPw1tekO82y19dD8DeJyH-aGdk8nNza4bxkzZNzqIXK-dokw/exec', {
+    fetch('https://cors-anywhere.herokuapp.com/https://script.google.com/macros/s/AKfycbyyXVxHU88Nk24zHB5SxaAPw1tekO82y19dD8DeJyH-aGdk8nNza4bxkzZNzqIXK-dokw/exec', {
         method: 'POST',
         body: JSON.stringify(data),
         headers: {
