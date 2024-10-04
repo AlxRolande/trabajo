@@ -831,7 +831,12 @@ function sendToGoogleSheets(data) {
             'Content-Type': 'application/json'
         }
     })
-    .then(response => response.json())
+    .then(response => {
+        if (!response.ok) {
+            throw new Error('Network response was not ok');
+        }
+        return response.json();
+    })
     .then(result => {
         console.log('Success:', result);
         alert('Datos guardados con éxito!');
