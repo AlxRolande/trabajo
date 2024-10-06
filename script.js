@@ -813,9 +813,20 @@ function agregarDatos() {
 function renderAddedList() {
     addedList.innerHTML = '';
     addedPeople.forEach((entry, index) => {
-        const div = document.createElement('div');
-        div.innerHTML = `${entry.Nombre} ${entry.Apellido} - Turno ${entry.Turno} - Móvil ${entry.Movil} - Fecha ${entry.Fecha} <button onclick="removeEntry(${index})" style="width: 80px; height: 30px;">Eliminar</button>`;
-        addedList.appendChild(div);
+        const li = document.createElement('li'); // Cambiar a li para mejor estructura
+        const textDiv = document.createElement('div');
+        textDiv.innerHTML = `${entry.Nombre} ${entry.Apellido} - Turno ${entry.Turno} - Móvil ${entry.Movil} - Fecha ${entry.Fecha}`;
+
+        const button = document.createElement('button');
+        button.textContent = 'Eliminar';
+        button.onclick = () => removeEntry(index);
+        button.style.width = '80px';
+        button.style.height = '30px';
+        button.style.marginTop = '4px'; // Margen superior para separar del texto
+
+        li.appendChild(textDiv);
+        li.appendChild(button);
+        addedList.appendChild(li);
     });
 }
 
