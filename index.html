@@ -5,10 +5,11 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Formulario de Turnos</title>
     <link rel="stylesheet" href="styles.css">
+    <link rel="icon" href="sgsp.ico" type="image/x-icon"> <!-- Agregar el ícono -->
 </head>
 <body>
     <div class="container">
-        <h1>Asignar Turno</h1>
+        <h1><img src="sgsp.jpg" alt="SGSP" class="logo"> Formulario choferes SGSP</h1>
         <input type="text" id="searchInput" placeholder="Buscar nombre...">
         <button id="searchButton">Buscar</button>
         <div id="searchResults"></div>
@@ -21,8 +22,11 @@
         <input type="date" id="fechaInput" disabled>
         <button id="addButton">Agregar</button>
         <button id="guardarButton">Guardar y Descargar</button>
+    </div>
+
+    <div id="addedListContainer">
         <h2>Lista Agregada</h2>
-        <div id="addedList"></div>
+        <ul id="addedList"></ul>
     </div>
     
     <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
