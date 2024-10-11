@@ -713,7 +713,12 @@ const data = 	[
       "Grado":2,
        "Nombre":"BRAULIO ANDRES CEDRES BARRETO",
        "C.I":"42362476"
-}
+},
+    {
+        "Grado":2,
+        "Nombre":"PABLO SEBASTIAN MADERA CAMACHO",
+        "C.I":"26278247"
+    }
 
 
 ];
@@ -813,7 +818,7 @@ function agregarDatos() {
 function renderAddedList() {
     addedList.innerHTML = '';
     addedPeople.forEach((entry, index) => {
-        const li = document.createElement('li'); // Cambiar a li para mejor estructura
+        const li = document.createElement('li');
         const textDiv = document.createElement('div');
         textDiv.innerHTML = `${entry.Nombre} ${entry.Apellido} - Turno ${entry.Turno} - Móvil ${entry.Movil} - Fecha ${entry.Fecha}`;
 
@@ -822,12 +827,16 @@ function renderAddedList() {
         button.onclick = () => removeEntry(index);
         button.style.width = '80px';
         button.style.height = '30px';
-        button.style.marginTop = '4px'; // Margen superior para separar del texto
+        button.style.marginTop = '4px';
 
         li.appendChild(textDiv);
         li.appendChild(button);
         addedList.appendChild(li);
     });
+
+    // Mostrar u ocultar el contenedor de la lista según si hay elementos
+    const addedListContainer = document.getElementById('addedListContainer');
+    addedListContainer.style.display = addedPeople.length > 0 ? 'block' : 'none';
 }
 
 function removeEntry(index) {
@@ -842,14 +851,17 @@ function guardarDatos() {
         return;
     }
 
-    const ws = XLSX.utils.json_to_sheet(addedPeople, {
-        header: ["Grado", "Nombre", "Apellido", "C.I", "Movil", "Fecha", "Turno"]
-    });
-    const wb = XLSX.utils.book_new();
-    XLSX.utils.book_append_sheet(wb, ws, "Turnos");
+    // Crear una hoja de cálculo
+    const worksheet = XLSX.utils.json_to_sheet(addedPeople);
+    const workbook = XLSX.utils.book_new();
+    
+    // Agregar la hoja al libro
+    XLSX.utils.book_append_sheet(workbook, worksheet, 'Datos');
 
-    XLSX.writeFile(wb, 'turnos.xlsx');
+    // Generar un archivo y descargarlo
+    XLSX.writeFile(workbook, 'datos_turnos.xlsx');
 }
+
 
 searchButton.addEventListener('click', searchNames);
 searchInput.addEventListener('input', searchNames); 
