@@ -735,6 +735,15 @@ const fechaInput = document.getElementById('fechaInput');
 let selectedPerson = null;
 let addedPeople = [];
 
+// Load added people from local storage on page load
+function loadAddedPeople() {
+    const storedData = localStorage.getItem('addedPeople');
+    if (storedData) {
+        addedPeople = JSON.parse(storedData);
+        renderAddedList();
+    }
+}
+
 function searchNames() {
     const query = searchInput.value.trim().toUpperCase();
     searchResults.innerHTML = '';
@@ -760,7 +769,6 @@ function selectPerson(person) {
     addButton.style.display = 'block';  
     if (!turnoSelect.disabled) return; 
 
-   
     turnoSelect.disabled = false;
     fechaInput.disabled = false;
 }
@@ -806,6 +814,7 @@ function agregarDatos() {
     };
 
     addedPeople.push(newEntry);
+    saveToLocalStorage();
     renderAddedList();
     searchInput.value = '';
     searchResults.innerHTML = '';
@@ -834,16 +843,19 @@ function renderAddedList() {
         addedList.appendChild(li);
     });
 
-    // Mostrar u ocultar el contenedor de la lista según si hay elementos
     const addedListContainer = document.getElementById('addedListContainer');
     addedListContainer.style.display = addedPeople.length > 0 ? 'block' : 'none';
 }
 
 function removeEntry(index) {
     addedPeople.splice(index, 1);
+    saveToLocalStorage();
     renderAddedList();
 }
 
+function saveToLocalStorage() {
+    localStorage.setItem('addedPeople', JSON.stringify(addedPeople));
+}
 
 function guardarDatos() {
     if (addedPeople.length === 0) {
@@ -851,17 +863,14 @@ function guardarDatos() {
         return;
     }
 
-    // Crear una hoja de cálculo
     const worksheet = XLSX.utils.json_to_sheet(addedPeople);
     const workbook = XLSX.utils.book_new();
-    
-    // Agregar la hoja al libro
     XLSX.utils.book_append_sheet(workbook, worksheet, 'Datos');
-
-    // Generar un archivo y descargarlo
     XLSX.writeFile(workbook, 'datos_turnos.xlsx');
 }
 
+// Load data from local storage when the page loads
+window.onload = loadAddedPeople;
 
 searchButton.addEventListener('click', searchNames);
 searchInput.addEventListener('input', searchNames); 
