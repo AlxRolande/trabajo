@@ -1,70 +1,5 @@
 const data = 	[
     {
-        "Grado": 8,
-        "Nombre": "MARCELO FABIAN MOREIRA VIERA",
-        "C.I": "42007529"
-    },
-    {
-        "Grado": 8,
-        "Nombre": "FERNANDO ANDRES CABALLERO REAL",
-        "C.I": "29760085"
-    },
-    {
-        "Grado": 7,
-        "Nombre": "KELLY DE LOS SANTOS",
-        "C.I": "45289211"
-    },
-    {
-        "Grado": 6,
-        "Nombre": "JUAN MARTIN DE LEON CUSTODIO",
-        "C.I": "46388533"
-    },
-    {
-        "Grado": 5,
-        "Nombre": "LUZ INES JEFFREY FERREIRA",
-        "C.I": "43884750"
-    },
-    {
-        "Grado": 5,
-        "Nombre": "RODRIGO ALEJANDRO JUBIN CASTILLO",
-        "C.I": "50703169"
-    },
-    {
-        "Grado": 5,
-        "Nombre": "FACUNDO LORENZO DIAZ FERREIRA",
-        "C.I": "50005282"
-    },
-    {
-        "Grado": 5,
-        "Nombre": "JUAN ANTONIO MONTERO SARACHAGA",
-        "C.I": "49683792"
-    },
-    {
-        "Grado": 5,
-        "Nombre": "AGUSTIN ALEXIS PIRIZ TRAPOTE",
-        "C.I": "51745994"
-    },
-    {
-        "Grado": 5,
-        "Nombre": "CARLOS FEDERICO SALMENTON PACHIAROTTI",
-        "C.I": "50817079"
-    },
-    {
-        "Grado": 4,
-        "Nombre": "ROBERT DANIEL DE LEON DELGADO",
-        "C.I": "30518617"
-    },
-    {
-        "Grado": 4,
-        "Nombre": "Francisco Javier BARBOZA HAUBMAN",
-        "C.I": "50290879"
-    },
-    {
-        "Grado": 4,
-        "Nombre": "DARIO ALEJANDRO ARAUJO CALERO",
-        "C.I": "34331386"
-    },
-    {
         "Grado": 3,
         "Nombre": "EDUARDO MARCELO IROLDI AMARILLA",
         "C.I": "26709795"
@@ -75,7 +10,7 @@ const data = 	[
         "C.I": "47778943"
     },
     {
-        "Grado": 3,
+        "Grado": 4,
         "Nombre": "MARCELO ANDRES LEONE OTORMIN",
         "C.I": "30775764"
     },
@@ -95,7 +30,7 @@ const data = 	[
         "C.I": "42263854"
     },
     {
-        "Grado": 2,
+        "Grado": 4,
         "Nombre": "MIGUEL ANGEL MEDINA GARCIA",
         "C.I": "30516562"
     },
@@ -140,12 +75,12 @@ const data = 	[
         "C.I": "46688294"
     },
     {
-        "Grado": 2,
+        "Grado": 3,
         "Nombre": "MARCOS GABRIEL RODRIGUEZ RECCIOPPE",
         "C.I": "44291681"
     },
     {
-        "Grado": 2,
+        "Grado": 3,
         "Nombre": "BRIAN NICOLAS LOPEZ DALUZ",
         "C.I": "43805857"
     },
@@ -155,7 +90,7 @@ const data = 	[
         "C.I": "43951723"
     },
     {
-        "Grado": 2,
+        "Grado": 1,
         "Nombre": "MARCOS CESAR LIMA ROYANO",
         "C.I": "45049118"
     },
@@ -180,7 +115,7 @@ const data = 	[
         "C.I": "46485129"
     },
     {
-        "Grado": 2,
+        "Grado": 1,
         "Nombre": "DILAN RECALDE REMEDIOS",
         "C.I": "54531427"
     },
@@ -200,47 +135,47 @@ const data = 	[
         "C.I": "49460869"
     },
     {
-        "Grado": 2,
+        "Grado": 1,
         "Nombre": "ANDREE MICHAEL SENA MOLLO",
         "C.I": "34707765"
     },
     {
-        "Grado": 2,
+        "Grado": 1,
         "Nombre": "ARIEL VICTOR SILVA LAPORTA",
         "C.I": "39736793"
     },
     {
-        "Grado": 2,
+        "Grado": 1,
         "Nombre": "VERONICA INES YANIBELLI GARCIA",
         "C.I": "45148962"
     },
     {
-        "Grado": 2,
+        "Grado": 1,
         "Nombre": "IGNACIO GERVASINI",
         "C.I": "52202656"
     },
     {
-        "Grado": 2,
+        "Grado": 1,
         "Nombre": "BRUNO MAXIMILIANO MAGALLAN JORAJURA",
         "C.I": "46147345"
     },
     {
-        "Grado": 2,
+        "Grado": 1,
         "Nombre": "Jonatan Nahuel VICENTE DOMINGUEZ",
         "C.I": "53217315"
     },
     {
-        "Grado": 2,
+        "Grado": 1,
         "Nombre": "PABLO CRISTINO FAGUNDEZ",
         "C.I": "46381648"
     },
     {
-        "Grado": 2,
+        "Grado": 1,
         "Nombre": "LUCAS SEBASTIAN ALMEIDA LOPEZ",
         "C.I": "54428276"
     },
     {
-        "Grado": 2,
+        "Grado": 1,
         "Nombre": "Facundo Agustin MURAÑA RIVERO",
         "C.I": "498495721"
     },
@@ -250,7 +185,7 @@ const data = 	[
         "C.I": "50912231"
     },
     {
-        "Grado": 1,
+        "Grado": 2,
         "Nombre": "ATANASILDO PEREZ CAMPO",
         "C.I": "26234590"
     },
@@ -303,11 +238,6 @@ const data = 	[
         "Grado": 1,
         "Nombre": "RODOLFO RAMON DENIZ MARCENAL",
         "C.I": "39989437"
-    },
-    {
-        "Grado": 1,
-        "Nombre": "ALEXANDER FACUNDO ROLANDE SOUZA",
-        "C.I": "51550181"
     },
     {
         "Grado": 1,
