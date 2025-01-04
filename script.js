@@ -719,8 +719,16 @@ const data = 	[
         "Nombre":"PABLO SEBASTIAN MADERA CAMACHO",
         "C.I":"26278247"
     }
-
-
+    {
+         "Grado":2,
+        "Nombre":"BRUNO DORNELLES GUTIERREZ",
+        "C.I":"46947761"
+    }
+ {
+         "Grado":2,
+        "Nombre":"MILTON DANILO BERRIEL ESPINO",
+        "C.I":"43340360"
+    }
 ];
 
 const searchInput = document.getElementById('searchInput');
