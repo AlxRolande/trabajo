@@ -722,7 +722,7 @@ const data = [
   {
     "grado": 1,
     "nombre": "YONATHAN SALDIVIA BRAGA",
-    "ci": "	"
+    "ci": "50694942"
   }
 ];
 
