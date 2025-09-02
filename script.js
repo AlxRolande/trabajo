@@ -726,7 +726,7 @@ const data = [
     },
      {
         "Grado": 3,
-        "Nombre": "ANIBAL ALVARIZA MUNIZ",
+        "Nombre": "ANIBAL ALVARIZA",
         "C.I": "37773791"
     }
     
