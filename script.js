@@ -723,7 +723,13 @@ const data = [
         "Grado": 1,
         "Nombre": "YONATHAN SALDIVIA BRAGA",
         "C.I": "50694942"
+    },
+     {
+        "Grado": 3,
+        "Nombre": "ANIBAL ALVARIZA MUNIZ",
+        "C.I": "37773791"
     }
+    
 ];
 
 const searchInput = document.getElementById('searchInput');
