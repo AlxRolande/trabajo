@@ -108,3 +108,34 @@ button:hover {
 #searchResults div:hover {
     background-color: #f1f1f1; 
 }
+
+#searchResults,
+#movilResults {
+    max-height: 150px;
+    overflow-y: auto;
+    border: 1px solid #ddd;
+    margin-bottom: 12px;
+    background: #fff;
+    border-radius: 4px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+/* Ítems */
+#searchResults div,
+#movilResults div {
+    padding: 8px;
+    border-bottom: 1px solid #ddd;
+    cursor: pointer;
+}
+
+/* Último ítem sin borde */
+#searchResults div:last-child,
+#movilResults div:last-child {
+    border-bottom: none;
+}
+
+/* Hover */
+#searchResults div:hover,
+#movilResults div:hover {
+    background-color: #f1f1f1;
+}
