@@ -1,35 +1,51 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="es">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Formulario de Turnos</title>
     <link rel="stylesheet" href="styles.css">
-    <link rel="icon" href="sgsp.ico" type="image/x-icon"> <!-- Agregar el ícono -->
+    <link rel="icon" href="sgsp.ico" type="image/x-icon">
 </head>
 <body>
-    <div class="container">
-        <h1><img src="sgsp.jpg" alt="SGSP" class="logo"> Formulario choferes SGSP</h1>
-        <input type="text" id="searchInput" placeholder="Buscar nombre...">
-        <button id="searchButton">Buscar</button>
-        <div id="searchResults"></div>
-        <select id="turnoSelect" disabled>
-            <option value="1">Turno 1</option>
-            <option value="2">Turno 2</option>
-            <option value="3">Turno 3</option>
-        </select>
-        <input type="text" id="movilInput" placeholder="Número de móvil">
-        <input type="date" id="fechaInput" disabled>
-        <button id="addButton">Agregar</button>
-        <button id="guardarButton">Guardar y Descargar</button>
-    </div>
 
-   <div id="addedListContainer" style="display: none;">
+<div class="container">
+    <h1>
+        <img src="sgsp.jpg" alt="SGSP" class="logo">
+        Formulario choferes SGSP
+    </h1>
+
+    <!-- BUSCADOR DE NOMBRES -->
+    <input type="text" id="searchInput" placeholder="Buscar nombre...">
+    <button id="searchButton">Buscar</button>
+    <div id="searchResults" class="search-results"></div>
+
+    <!-- TURNO -->
+    <select id="turnoSelect" disabled>
+        <option value="1">Turno 1</option>
+        <option value="2">Turno 2</option>
+        <option value="3">Turno 3</option>
+    </select>
+
+    <!-- BUSCADOR DE MOVIL -->
+    <input type="text" id="movilInput" placeholder="Buscar móvil...">
+    <div id="movilResults" class="search-results"></div>
+
+    <!-- FECHA -->
+    <input type="date" id="fechaInput" disabled>
+
+    <button id="addButton" style="display:none;">Agregar</button>
+    <button id="guardarButton">Guardar y Descargar</button>
+</div>
+
+<div id="addedListContainer" style="display:none;">
     <h2>Lista Agregada</h2>
     <ul id="addedList"></ul>
 </div>
-    
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
-    <script src="script.js"></script>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
+<script src="script.js"></script>
+
 </body>
 </html>
+
