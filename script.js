@@ -731,12 +731,12 @@ const data = [
     }
     
 ];
-
 const moviles = [
-    "SMI6042-063","SMI6110-062","SMI1311(BASE MOVIL)","SMI5439-046","SMI5269-015",
-    "SMI5361-064","SMI1313-068","SMI5969-019","SMI3793-013","SMI6115-035",
-    "SMI5823-082","SMI5324-080","SMI5761-047","SMI6118-048","SMI5300-042",
-    "SMI6113-018","SMI6111-081","MIS05882-033","SMI5543-044","SMI5506-06",
+    "SMI6042-063","SMI6110-062","SMI1311(BASE MOVIL)","SMI5439-046",
+    "SMI5269-015","SMI5361-064","SMI1313-068","SMI5969-019",
+    "SMI3793-013","SMI6115-035","SMI5823-082","SMI5324-080",
+    "SMI5761-047","SMI6118-048","SMI5300-042","SMI6113-018",
+    "SMI6111-081","MIS05882-033","SMI5543-044","SMI5506-06",
     "SMI5338-038","SMI1113-005","SMI3834-014"
 ];
 
@@ -748,10 +748,11 @@ const searchResults = document.getElementById('searchResults');
 const turnoSelect = document.getElementById('turnoSelect');
 const movilInput = document.getElementById('movilInput');
 const movilResults = document.getElementById('movilResults');
+const fechaInput = document.getElementById('fechaInput');
 const addButton = document.getElementById('addButton');
 const guardarButton = document.getElementById('guardarButton');
 const addedList = document.getElementById('addedList');
-const fechaInput = document.getElementById('fechaInput');
+const addedListContainer = document.getElementById('addedListContainer');
 
 /* ================= VARIABLES ================= */
 
@@ -778,6 +779,7 @@ function saveToLocalStorage() {
 function searchNames() {
     const query = searchInput.value.trim().toUpperCase();
     searchResults.innerHTML = '';
+    selectedPerson = null;
 
     if (!query) return;
 
@@ -788,7 +790,7 @@ function searchNames() {
     results.forEach(person => {
         const div = document.createElement('div');
         div.textContent = person.Nombre;
-        div.onclick = () => selectPerson(person);
+        div.addEventListener('click', () => selectPerson(person));
         searchResults.appendChild(div);
     });
 
@@ -822,7 +824,7 @@ function searchMoviles() {
     results.forEach(movil => {
         const div = document.createElement('div');
         div.textContent = movil;
-        div.onclick = () => selectMovil(movil);
+        div.addEventListener('click', () => selectMovil(movil));
         movilResults.appendChild(div);
     });
 
@@ -837,13 +839,13 @@ function selectMovil(movil) {
     movilResults.innerHTML = '';
 }
 
-/* ================= UTILIDADES ================= */
+/* ================= UTIL ================= */
 
-function getFirstNameAndLastName(fullName) {
-    const parts = fullName.split(' ');
+function getFirstNameAndLastName(nombre) {
+    const partes = nombre.split(' ');
     return {
-        firstName: parts[0],
-        lastName: parts.slice(1).join(' ')
+        firstName: partes[0],
+        lastName: partes.slice(1).join(' ')
     };
 }
 
@@ -853,8 +855,10 @@ function agregarDatos() {
     if (!selectedPerson) return alert('Selecciona un nombre');
     if (!selectedMovil) return alert('Selecciona un móvil');
     if (!fechaInput.value) return alert('Selecciona una fecha');
+    if (!turnoSelect.value) return alert('Selecciona un turno');
 
-    const { firstName, lastName } = getFirstNameAndLastName(selectedPerson.Nombre);
+    const { firstName, lastName } =
+        getFirstNameAndLastName(selectedPerson.Nombre);
 
     addedPeople.push({
         Grado: selectedPerson.Grado,
@@ -871,6 +875,9 @@ function agregarDatos() {
 
     searchInput.value = '';
     movilInput.value = '';
+    turnoSelect.value = '';
+    fechaInput.value = '';
+
     selectedPerson = null;
     selectedMovil = null;
     addButton.style.display = 'none';
@@ -881,16 +888,23 @@ function agregarDatos() {
 function renderAddedList() {
     addedList.innerHTML = '';
 
-    addedPeople.forEach((p, i) => {
+    addedPeople.forEach((p, index) => {
         const li = document.createElement('li');
-        li.innerHTML = `
-            ${p.Nombre} ${p.Apellido} | Turno ${p.Turno} | ${p.Movil} | ${p.Fecha}
-            <button onclick="removeEntry(${i})">Eliminar</button>
-        `;
+        const texto = document.createElement('span');
+
+        texto.textContent =
+            `${p.Nombre} ${p.Apellido} | Turno ${p.Turno} | ${p.Movil} | ${p.Fecha}`;
+
+        const btn = document.createElement('button');
+        btn.textContent = 'Eliminar';
+        btn.addEventListener('click', () => removeEntry(index));
+
+        li.appendChild(texto);
+        li.appendChild(btn);
         addedList.appendChild(li);
     });
 
-    document.getElementById('addedListContainer').style.display =
+    addedListContainer.style.display =
         addedPeople.length ? 'block' : 'none';
 }
 
@@ -903,7 +917,10 @@ function removeEntry(index) {
 /* ================= EXCEL ================= */
 
 function guardarDatos() {
-    if (!addedPeople.length) return alert('No hay datos');
+    if (!addedPeople.length) {
+        alert('No hay datos para guardar');
+        return;
+    }
 
     const ws = XLSX.utils.json_to_sheet(addedPeople);
     const wb = XLSX.utils.book_new();
@@ -913,7 +930,7 @@ function guardarDatos() {
 
 /* ================= EVENTOS ================= */
 
-window.onload = loadAddedPeople;
+window.addEventListener('load', loadAddedPeople);
 
 searchButton.addEventListener('click', searchNames);
 searchInput.addEventListener('input', searchNames);
