@@ -732,42 +732,68 @@ const data = [
     
 ];
 
+const moviles = [
+    "SMI6042-063","SMI6110-062","SMI1311(BASE MOVIL)","SMI5439-046","SMI5269-015",
+    "SMI5361-064","SMI1313-068","SMI5969-019","SMI3793-013","SMI6115-035",
+    "SMI5823-082","SMI5324-080","SMI5761-047","SMI6118-048","SMI5300-042",
+    "SMI6113-018","SMI6111-081","MIS05882-033","SMI5543-044","SMI5506-06",
+    "SMI5338-038","SMI1113-005","SMI3834-014"
+];
+
+/* ================= ELEMENTOS ================= */
+
 const searchInput = document.getElementById('searchInput');
 const searchButton = document.getElementById('searchButton');
 const searchResults = document.getElementById('searchResults');
 const turnoSelect = document.getElementById('turnoSelect');
 const movilInput = document.getElementById('movilInput');
+const movilResults = document.getElementById('movilResults');
 const addButton = document.getElementById('addButton');
 const guardarButton = document.getElementById('guardarButton');
 const addedList = document.getElementById('addedList');
 const fechaInput = document.getElementById('fechaInput');
+
+/* ================= VARIABLES ================= */
+
 let selectedPerson = null;
+let selectedMovil = null;
 let addedPeople = [];
 
-// Load added people from local storage on page load
+/* ================= LOCAL STORAGE ================= */
+
 function loadAddedPeople() {
-    const storedData = localStorage.getItem('addedPeople');
-    if (storedData) {
-        addedPeople = JSON.parse(storedData);
+    const stored = localStorage.getItem('addedPeople');
+    if (stored) {
+        addedPeople = JSON.parse(stored);
         renderAddedList();
     }
 }
 
+function saveToLocalStorage() {
+    localStorage.setItem('addedPeople', JSON.stringify(addedPeople));
+}
+
+/* ================= BUSCADOR NOMBRES ================= */
+
 function searchNames() {
     const query = searchInput.value.trim().toUpperCase();
     searchResults.innerHTML = '';
-    if (query.length > 0) {
-        const results = data.filter(item => item.Nombre && item.Nombre.toUpperCase().includes(query));
-        results.forEach(item => {
-            const div = document.createElement('div');
-            div.textContent = item.Nombre;
-            div.onclick = () => selectPerson(item);
-            searchResults.appendChild(div);
-        });
 
-        if (results.length === 0) {
-            searchResults.innerHTML = '<div>No se encontraron resultados</div>';
-        }
+    if (!query) return;
+
+    const results = data.filter(p =>
+        p.Nombre.toUpperCase().includes(query)
+    );
+
+    results.forEach(person => {
+        const div = document.createElement('div');
+        div.textContent = person.Nombre;
+        div.onclick = () => selectPerson(person);
+        searchResults.appendChild(div);
+    });
+
+    if (!results.length) {
+        searchResults.innerHTML = '<div>No se encontraron resultados</div>';
     }
 }
 
@@ -775,85 +801,97 @@ function selectPerson(person) {
     selectedPerson = person;
     searchInput.value = person.Nombre;
     searchResults.innerHTML = '';
-    addButton.style.display = 'block';  
-    if (!turnoSelect.disabled) return; 
-
     turnoSelect.disabled = false;
     fechaInput.disabled = false;
+    addButton.style.display = 'block';
 }
+
+/* ================= BUSCADOR MOVILES ================= */
+
+function searchMoviles() {
+    const query = movilInput.value.trim().toUpperCase();
+    movilResults.innerHTML = '';
+    selectedMovil = null;
+
+    if (!query) return;
+
+    const results = moviles.filter(m =>
+        m.toUpperCase().includes(query)
+    );
+
+    results.forEach(movil => {
+        const div = document.createElement('div');
+        div.textContent = movil;
+        div.onclick = () => selectMovil(movil);
+        movilResults.appendChild(div);
+    });
+
+    if (!results.length) {
+        movilResults.innerHTML = '<div>No se encontraron móviles</div>';
+    }
+}
+
+function selectMovil(movil) {
+    selectedMovil = movil;
+    movilInput.value = movil;
+    movilResults.innerHTML = '';
+}
+
+/* ================= UTILIDADES ================= */
 
 function getFirstNameAndLastName(fullName) {
     const parts = fullName.split(' ');
-    const firstName = parts[0];
-    let lastName;
-
-    if (parts.length > 2) {
-        lastName = parts.slice(2).join(' ');
-    } else {
-        lastName = parts.length > 1 ? parts[1] : ''; 
-    }
-
-    return { firstName, lastName };
+    return {
+        firstName: parts[0],
+        lastName: parts.slice(1).join(' ')
+    };
 }
+
+/* ================= AGREGAR ================= */
 
 function agregarDatos() {
-    if (!selectedPerson) {
-        alert('Por favor, selecciona un nombre.');
-        return;
-    }
+    if (!selectedPerson) return alert('Selecciona un nombre');
+    if (!selectedMovil) return alert('Selecciona un móvil');
+    if (!fechaInput.value) return alert('Selecciona una fecha');
 
     const { firstName, lastName } = getFirstNameAndLastName(selectedPerson.Nombre);
-    const turno = turnoSelect.value;
-    const movil = movilInput.value.trim();
-    const fecha = fechaInput.value; 
 
-    if (!fecha) {
-        alert('Por favor, selecciona una fecha.');
-        return;
-    }
+    addedPeople.push({
+        Grado: selectedPerson.Grado,
+        Nombre: firstName,
+        Apellido: lastName,
+        "C.I": selectedPerson["C.I"],
+        Movil: selectedMovil,
+        Turno: turnoSelect.value,
+        Fecha: fechaInput.value
+    });
 
-    const newEntry = {
-        "Grado": selectedPerson.Grado,
-        "Nombre": firstName,  
-        "Apellido": lastName, 
-        "C.I": selectedPerson["C.I"],  
-        "Movil": movil,
-        "Fecha": fecha,  
-        "Turno": turno
-    };
-
-    addedPeople.push(newEntry);
     saveToLocalStorage();
     renderAddedList();
+
     searchInput.value = '';
-    searchResults.innerHTML = '';
     movilInput.value = '';
-  
-    addButton.style.display = 'none';  
-    selectedPerson = null; 
+    selectedPerson = null;
+    selectedMovil = null;
+    addButton.style.display = 'none';
 }
+
+/* ================= LISTA ================= */
 
 function renderAddedList() {
     addedList.innerHTML = '';
-    addedPeople.forEach((entry, index) => {
+
+    addedPeople.forEach((p, i) => {
         const li = document.createElement('li');
-        const textDiv = document.createElement('div');
-        textDiv.innerHTML = `${entry.Nombre} ${entry.Apellido} - Turno ${entry.Turno} - Móvil ${entry.Movil} - Fecha ${entry.Fecha}`;
-
-        const button = document.createElement('button');
-        button.textContent = 'Eliminar';
-        button.onclick = () => removeEntry(index);
-        button.style.width = '80px';
-        button.style.height = '30px';
-        button.style.marginTop = '4px';
-
-        li.appendChild(textDiv);
-        li.appendChild(button);
+        li.innerHTML = `
+            ${p.Nombre} ${p.Apellido} | Turno ${p.Turno} | ${p.Movil} | ${p.Fecha}
+            <button onclick="removeEntry(${i})">Eliminar</button>
+        `;
         addedList.appendChild(li);
     });
 
-    const addedListContainer = document.getElementById('addedListContainer');
-    addedListContainer.style.display = addedPeople.length > 0 ? 'block' : 'none';
+    document.getElementById('addedListContainer').style.display =
+        addedPeople.length ? 'block' : 'none';
 }
 
 function removeEntry(index) {
@@ -862,26 +900,23 @@ function removeEntry(index) {
     renderAddedList();
 }
 
-function saveToLocalStorage() {
-    localStorage.setItem('addedPeople', JSON.stringify(addedPeople));
-}
+/* ================= EXCEL ================= */
 
 function guardarDatos() {
-    if (addedPeople.length === 0) {
-        alert('No hay datos para guardar.');
-        return;
-    }
+    if (!addedPeople.length) return alert('No hay datos');
 
-    const worksheet = XLSX.utils.json_to_sheet(addedPeople);
-    const workbook = XLSX.utils.book_new();
-    XLSX.utils.book_append_sheet(workbook, worksheet, 'Datos');
-    XLSX.writeFile(workbook, 'datos_turnos.xlsx');
+    const ws = XLSX.utils.json_to_sheet(addedPeople);
+    const wb = XLSX.utils.book_new();
+    XLSX.utils.book_append_sheet(wb, ws, 'Datos');
+    XLSX.writeFile(wb, 'datos_turnos.xlsx');
 }
 
-// Load data from local storage when the page loads
+/* ================= EVENTOS ================= */
+
 window.onload = loadAddedPeople;
 
 searchButton.addEventListener('click', searchNames);
-searchInput.addEventListener('input', searchNames); 
+searchInput.addEventListener('input', searchNames);
+movilInput.addEventListener('input', searchMoviles);
 addButton.addEventListener('click', agregarDatos);
 guardarButton.addEventListener('click', guardarDatos);
