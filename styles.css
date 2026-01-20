@@ -17,14 +17,17 @@ body {
     width: 350px;
     box-sizing: border-box;
     margin-right: 20px;
-    position: relative; /* 🔑 CLAVE para dropdowns */
 }
 
 .logo {
     width: 100px;
-    height: auto;
-    display: block;
     margin: 0 auto 10px;
+    display: block;
+}
+
+/* ===== FIELD WRAPPER ===== */
+.field {
+    position: relative; /* 🔑 CLAVE */
 }
 
 /* ===== FORM ===== */
@@ -48,29 +51,28 @@ button:hover {
     background-color: #0056b3;
 }
 
-/* ===== RESULTADOS (CHOFERES Y MÓVILES) ===== */
+/* ===== DROPDOWNS ===== */
 #searchResults,
 #movilResults {
-    position: absolute;        /* 🔑 */
+    position: absolute;
+    top: 100%;              /* 🔑 debajo del input */
     left: 0;
     right: 0;
     z-index: 1000;
     max-height: 160px;
     overflow-y: auto;
-    border: 1px solid #ddd;
     background: #fff;
+    border: 1px solid #ddd;
     border-radius: 4px;
     box-shadow: 0 2px 5px rgba(0,0,0,0.15);
-    display: none;             /* 🔑 ocultos por defecto */
+    display: none;
 }
 
-/* Mostrar cuando tengan contenido */
 #searchResults:not(:empty),
 #movilResults:not(:empty) {
     display: block;
 }
 
-/* Items */
 #searchResults div,
 #movilResults div {
     padding: 8px 10px;
@@ -106,14 +108,8 @@ button:hover {
 }
 
 #addedList li {
-    display: flex;
-    flex-direction: column;
     padding: 8px;
     border-bottom: 1px solid #ddd;
-}
-
-#addedList li:last-child {
-    border-bottom: none;
 }
 
 #addedList li:hover {
@@ -124,9 +120,8 @@ button:hover {
     background-color: red;
     color: white;
     border: none;
-    cursor: pointer;
     padding: 4px 8px;
     border-radius: 4px;
     margin-top: 4px;
-    align-self: flex-start;
+    cursor: pointer;
 }
