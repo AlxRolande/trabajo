@@ -16,13 +16,21 @@
         Formulario choferes SGSP
     </h1>
 
-    <!-- NOMBRE -->
+    <!-- ===== NOMBRE ===== -->
     <label for="searchInput">Nombre</label>
-    <input type="text" id="searchInput" placeholder="Buscar nombre..." autocomplete="off">
-    <button id="searchButton">Buscar</button>
-    <div id="searchResults" class="search-results"></div>
+    <div class="field">
+        <input
+            type="text"
+            id="searchInput"
+            placeholder="Buscar nombre..."
+            autocomplete="off"
+        >
+        <div id="searchResults" class="search-results"></div>
+    </div>
 
-    <!-- TURNO -->
+    <button id="searchButton">Buscar</button>
+
+    <!-- ===== TURNO ===== -->
     <label for="turnoSelect">Turno</label>
     <select id="turnoSelect" disabled aria-label="Seleccionar turno">
         <option value="">Seleccione turno</option>
@@ -31,12 +39,19 @@
         <option value="3">Turno 3</option>
     </select>
 
-    <!-- MOVIL -->
+    <!-- ===== MÓVIL ===== -->
     <label for="movilInput">Móvil</label>
-    <input type="text" id="movilInput" placeholder="Buscar móvil..." autocomplete="off">
-    <div id="movilResults" class="search-results"></div>
+    <div class="field">
+        <input
+            type="text"
+            id="movilInput"
+            placeholder="Buscar móvil..."
+            autocomplete="off"
+        >
+        <div id="movilResults" class="search-results"></div>
+    </div>
 
-    <!-- FECHA -->
+    <!-- ===== FECHA ===== -->
     <label for="fechaInput">Fecha</label>
     <input type="date" id="fechaInput" disabled>
 
