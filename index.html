@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Formulario de Turnos</title>
+
     <link rel="stylesheet" href="styles.css">
     <link rel="icon" href="sgsp.ico" type="image/x-icon">
 </head>
@@ -15,23 +16,28 @@
         Formulario choferes SGSP
     </h1>
 
-    <!-- BUSCADOR DE NOMBRES -->
-    <input type="text" id="searchInput" placeholder="Buscar nombre...">
+    <!-- NOMBRE -->
+    <label for="searchInput">Nombre</label>
+    <input type="text" id="searchInput" placeholder="Buscar nombre..." autocomplete="off">
     <button id="searchButton">Buscar</button>
     <div id="searchResults" class="search-results"></div>
 
     <!-- TURNO -->
-    <select id="turnoSelect" disabled>
+    <label for="turnoSelect">Turno</label>
+    <select id="turnoSelect" disabled aria-label="Seleccionar turno">
+        <option value="">Seleccione turno</option>
         <option value="1">Turno 1</option>
         <option value="2">Turno 2</option>
         <option value="3">Turno 3</option>
     </select>
 
-    <!-- BUSCADOR DE MOVIL -->
-    <input type="text" id="movilInput" placeholder="Buscar móvil...">
+    <!-- MOVIL -->
+    <label for="movilInput">Móvil</label>
+    <input type="text" id="movilInput" placeholder="Buscar móvil..." autocomplete="off">
     <div id="movilResults" class="search-results"></div>
 
     <!-- FECHA -->
+    <label for="fechaInput">Fecha</label>
     <input type="date" id="fechaInput" disabled>
 
     <button id="addButton" style="display:none;">Agregar</button>
@@ -48,4 +54,3 @@
 
 </body>
 </html>
-
