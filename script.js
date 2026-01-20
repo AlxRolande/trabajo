@@ -758,7 +758,6 @@ const moviles = [
     "SMI3834-014"
 ];
 
-// ================== ELEMENTOS ==================
 const searchInput = document.getElementById("searchInput");
 const searchResults = document.getElementById("searchResults");
 const turnoSelect = document.getElementById("turnoSelect");
@@ -773,7 +772,7 @@ let selectedPerson = null;
 let addedPeople = [];
 
 // ================== HELPERS ==================
-function getFirstNameAndLastName(fullName) {
+function splitName(fullName) {
     const parts = fullName.split(" ");
     return {
         firstName: parts[0],
@@ -785,6 +784,7 @@ function getFirstNameAndLastName(fullName) {
 searchInput.addEventListener("input", () => {
     const value = searchInput.value.toUpperCase().trim();
     searchResults.innerHTML = "";
+    selectedPerson = null;
 
     if (!value) return;
 
@@ -794,18 +794,30 @@ searchInput.addEventListener("input", () => {
             const div = document.createElement("div");
             div.textContent = person.Nombre;
 
-            div.addEventListener("click", () => {
+            div.onclick = () => {
                 selectedPerson = person;
                 searchInput.value = person.Nombre;
                 searchResults.innerHTML = "";
 
                 turnoSelect.disabled = false;
-                fechaInput.disabled = false;
-                addButton.style.display = "block";
-            });
+            };
 
             searchResults.appendChild(div);
         });
+});
+
+// ================== TURNO ==================
+turnoSelect.addEventListener("change", () => {
+    if (turnoSelect.value) {
+        fechaInput.disabled = false;
+    }
+});
+
+// ================== FECHA ==================
+fechaInput.addEventListener("change", () => {
+    if (fechaInput.value) {
+        addButton.style.display = "block";
+    }
 });
 
 // ================== BUSCADOR MÓVILES ==================
@@ -821,10 +833,10 @@ movilInput.addEventListener("input", () => {
             const div = document.createElement("div");
             div.textContent = movil;
 
-            div.addEventListener("click", () => {
+            div.onclick = () => {
                 movilInput.value = movil;
                 movilResults.innerHTML = "";
-            });
+            };
 
             movilResults.appendChild(div);
         });
@@ -832,20 +844,14 @@ movilInput.addEventListener("input", () => {
 
 // ================== AGREGAR ==================
 addButton.addEventListener("click", () => {
-    if (!selectedPerson) {
-        alert("Seleccione un chofer");
-        return;
-    }
-
-    if (!movilInput.value || !turnoSelect.value || !fechaInput.value) {
+    if (!selectedPerson || !movilInput.value || !turnoSelect.value || !fechaInput.value) {
         alert("Complete todos los campos");
         return;
     }
 
-    const { firstName, lastName } =
-        getFirstNameAndLastName(selectedPerson.Nombre);
+    const { firstName, lastName } = splitName(selectedPerson.Nombre);
 
-    const entry = {
+    addedPeople.push({
         Grado: selectedPerson.Grado,
         Nombre: firstName,
         Apellido: lastName,
@@ -853,9 +859,8 @@ addButton.addEventListener("click", () => {
         Movil: movilInput.value,
         Turno: turnoSelect.value,
         Fecha: fechaInput.value
-    };
+    });
 
-    addedPeople.push(entry);
     renderAddedList();
 
     // Reset
@@ -873,14 +878,17 @@ addButton.addEventListener("click", () => {
 function renderAddedList() {
     addedList.innerHTML = "";
 
-    addedPeople.forEach((p, index) => {
+    addedPeople.forEach((p, i) => {
         const li = document.createElement("li");
-        li.textContent = `${p.Nombre} ${p.Apellido} - Turno ${p.Turno} - ${p.Movil}`;
+        li.innerHTML = `
+            ${p.Nombre} ${p.Apellido}<br>
+            Turno ${p.Turno} - ${p.Movil}
+        `;
 
         const btn = document.createElement("button");
         btn.textContent = "Eliminar";
         btn.onclick = () => {
-            addedPeople.splice(index, 1);
+            addedPeople.splice(i, 1);
             renderAddedList();
         };
 
