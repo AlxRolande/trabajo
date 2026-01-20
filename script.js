@@ -731,209 +731,176 @@ const data = [
     }
     
 ];
+
 const moviles = [
-    "SMI6042-063","SMI6110-062","SMI1311(BASE MOVIL)","SMI5439-046",
-    "SMI5269-015","SMI5361-064","SMI1313-068","SMI5969-019",
-    "SMI3793-013","SMI6115-035","SMI5823-082","SMI5324-080",
-    "SMI5761-047","SMI6118-048","SMI5300-042","SMI6113-018",
-    "SMI6111-081","MIS05882-033","SMI5543-044","SMI5506-06",
-    "SMI5338-038","SMI1113-005","SMI3834-014"
+    "SMI6042-063",
+    "SMI6110-062",
+    "SMI1311(BASE MOVIL)",
+    "SMI5439-046",
+    "SMI5269-015",
+    "SMI5361-064",
+    "SMI1313-068",
+    "SMI5969-019",
+    "SMI3793-013",
+    "SMI6115-035",
+    "SMI5823-082",
+    "SMI5324-080",
+    "SMI5761-047",
+    "SMI6118-048",
+    "SMI5300-042",
+    "SMI6113-018",
+    "SMI6111-081",
+    "MIS05882-033",
+    "SMI5543-044",
+    "SMI5506-06",
+    "SMI5338-038",
+    "SMI1113-005",
+    "SMI3834-014"
 ];
 
-/* ================= ELEMENTOS ================= */
+/**********************
+ * ELEMENTOS DOM
+ **********************/
 
-const searchInput = document.getElementById('searchInput');
-const searchButton = document.getElementById('searchButton');
-const searchResults = document.getElementById('searchResults');
-const turnoSelect = document.getElementById('turnoSelect');
-const movilInput = document.getElementById('movilInput');
-const movilResults = document.getElementById('movilResults');
-const fechaInput = document.getElementById('fechaInput');
-const addButton = document.getElementById('addButton');
-const guardarButton = document.getElementById('guardarButton');
-const addedList = document.getElementById('addedList');
-const addedListContainer = document.getElementById('addedListContainer');
+const searchInput = document.getElementById("searchInput");
+const searchButton = document.getElementById("searchButton");
+const searchResults = document.getElementById("searchResults");
 
-/* ================= VARIABLES ================= */
+const movilInput = document.getElementById("movilInput");
+const movilResults = document.getElementById("movilResults");
 
-let selectedPerson = null;
-let selectedMovil = null;
-let addedPeople = [];
+const turnoSelect = document.getElementById("turnoSelect");
+const fechaInput = document.getElementById("fechaInput");
 
-/* ================= LOCAL STORAGE ================= */
+const addButton = document.getElementById("addButton");
+const guardarButton = document.getElementById("guardarButton");
 
-function loadAddedPeople() {
-    const stored = localStorage.getItem('addedPeople');
-    if (stored) {
-        addedPeople = JSON.parse(stored);
-        renderAddedList();
-    }
-}
+const addedListContainer = document.getElementById("addedListContainer");
+const addedList = document.getElementById("addedList");
 
-function saveToLocalStorage() {
-    localStorage.setItem('addedPeople', JSON.stringify(addedPeople));
-}
+/**********************
+ * BUSCADOR CHOFERES
+ **********************/
 
-/* ================= BUSCADOR NOMBRES ================= */
+searchButton.addEventListener("click", () => {
+    const value = searchInput.value.toLowerCase();
+    searchResults.innerHTML = "";
 
-function searchNames() {
-    const query = searchInput.value.trim().toUpperCase();
-    searchResults.innerHTML = '';
-    selectedPerson = null;
+    if (!value) return;
 
-    if (!query) return;
+    choferes
+        .filter(c => c.toLowerCase().includes(value))
+        .forEach(chofer => {
+            const div = document.createElement("div");
+            div.className = "result-item";
+            div.textContent = chofer;
 
-    const results = data.filter(p =>
-        p.Nombre.toUpperCase().includes(query)
-    );
+            div.addEventListener("click", () => {
+                searchInput.value = chofer;
+                searchResults.innerHTML = "";
+                turnoSelect.disabled = false;
+                fechaInput.disabled = false;
+            });
 
-    results.forEach(person => {
-        const div = document.createElement('div');
-        div.textContent = person.Nombre;
-        div.addEventListener('click', () => selectPerson(person));
-        searchResults.appendChild(div);
-    });
+            searchResults.appendChild(div);
+        });
+});
 
-    if (!results.length) {
-        searchResults.innerHTML = '<div>No se encontraron resultados</div>';
-    }
-}
+/**********************
+ * BUSCADOR MÓVILES
+ **********************/
 
-function selectPerson(person) {
-    selectedPerson = person;
-    searchInput.value = person.Nombre;
-    searchResults.innerHTML = '';
-    turnoSelect.disabled = false;
-    fechaInput.disabled = false;
-    addButton.style.display = 'block';
-}
+movilInput.addEventListener("input", () => {
+    const value = movilInput.value.toLowerCase();
+    movilResults.innerHTML = "";
 
-/* ================= BUSCADOR MOVILES ================= */
+    if (!value) return;
 
-function searchMoviles() {
-    const query = movilInput.value.trim().toUpperCase();
-    movilResults.innerHTML = '';
-    selectedMovil = null;
+    moviles
+        .filter(m => m.toLowerCase().includes(value))
+        .forEach(movil => {
+            const div = document.createElement("div");
+            div.className = "result-item";
+            div.textContent = movil;
 
-    if (!query) return;
+            div.addEventListener("click", () => {
+                movilInput.value = movil;
+                movilResults.innerHTML = "";
+                addButton.style.display = "block";
+            });
 
-    const results = moviles.filter(m =>
-        m.toUpperCase().includes(query)
-    );
+            movilResults.appendChild(div);
+        });
+});
 
-    results.forEach(movil => {
-        const div = document.createElement('div');
-        div.textContent = movil;
-        div.addEventListener('click', () => selectMovil(movil));
-        movilResults.appendChild(div);
-    });
+/**********************
+ * AGREGAR A LISTA
+ **********************/
 
-    if (!results.length) {
-        movilResults.innerHTML = '<div>No se encontraron móviles</div>';
-    }
-}
+addButton.addEventListener("click", () => {
+    const chofer = searchInput.value;
+    const movil = movilInput.value;
+    const turno = turnoSelect.value;
+    const fecha = fechaInput.value;
 
-function selectMovil(movil) {
-    selectedMovil = movil;
-    movilInput.value = movil;
-    movilResults.innerHTML = '';
-}
-
-/* ================= UTIL ================= */
-
-function getFirstNameAndLastName(nombre) {
-    const partes = nombre.split(' ');
-    return {
-        firstName: partes[0],
-        lastName: partes.slice(1).join(' ')
-    };
-}
-
-/* ================= AGREGAR ================= */
-
-function agregarDatos() {
-    if (!selectedPerson) return alert('Selecciona un nombre');
-    if (!selectedMovil) return alert('Selecciona un móvil');
-    if (!fechaInput.value) return alert('Selecciona una fecha');
-    if (!turnoSelect.value) return alert('Selecciona un turno');
-
-    const { firstName, lastName } =
-        getFirstNameAndLastName(selectedPerson.Nombre);
-
-    addedPeople.push({
-        Grado: selectedPerson.Grado,
-        Nombre: firstName,
-        Apellido: lastName,
-        "C.I": selectedPerson["C.I"],
-        Movil: selectedMovil,
-        Turno: turnoSelect.value,
-        Fecha: fechaInput.value
-    });
-
-    saveToLocalStorage();
-    renderAddedList();
-
-    searchInput.value = '';
-    movilInput.value = '';
-    turnoSelect.value = '';
-    fechaInput.value = '';
-
-    selectedPerson = null;
-    selectedMovil = null;
-    addButton.style.display = 'none';
-}
-
-/* ================= LISTA ================= */
-
-function renderAddedList() {
-    addedList.innerHTML = '';
-
-    addedPeople.forEach((p, index) => {
-        const li = document.createElement('li');
-        const texto = document.createElement('span');
-
-        texto.textContent =
-            `${p.Nombre} ${p.Apellido} | Turno ${p.Turno} | ${p.Movil} | ${p.Fecha}`;
-
-        const btn = document.createElement('button');
-        btn.textContent = 'Eliminar';
-        btn.addEventListener('click', () => removeEntry(index));
-
-        li.appendChild(texto);
-        li.appendChild(btn);
-        addedList.appendChild(li);
-    });
-
-    addedListContainer.style.display =
-        addedPeople.length ? 'block' : 'none';
-}
-
-function removeEntry(index) {
-    addedPeople.splice(index, 1);
-    saveToLocalStorage();
-    renderAddedList();
-}
-
-/* ================= EXCEL ================= */
-
-function guardarDatos() {
-    if (!addedPeople.length) {
-        alert('No hay datos para guardar');
+    if (!chofer || !movil || !turno || !fecha) {
+        alert("Complete todos los campos");
         return;
     }
 
-    const ws = XLSX.utils.json_to_sheet(addedPeople);
+    const li = document.createElement("li");
+    li.innerHTML = `
+        <strong>${chofer}</strong>
+        <span>Móvil: ${movil}</span>
+        <span>Turno: ${turno}</span>
+        <span>Fecha: ${fecha}</span>
+        <button>Eliminar</button>
+    `;
+
+    li.querySelector("button").addEventListener("click", () => {
+        li.remove();
+        if (!addedList.children.length) {
+            addedListContainer.style.display = "none";
+        }
+    });
+
+    addedList.appendChild(li);
+    addedListContainer.style.display = "block";
+
+    // Reset
+    searchInput.value = "";
+    movilInput.value = "";
+    turnoSelect.value = "";
+    fechaInput.value = "";
+    turnoSelect.disabled = true;
+    fechaInput.disabled = true;
+    addButton.style.display = "none";
+});
+
+/**********************
+ * EXPORTAR A EXCEL
+ **********************/
+
+guardarButton.addEventListener("click", () => {
+    if (!addedList.children.length) {
+        alert("No hay datos para guardar");
+        return;
+    }
+
+    const data = [];
+    addedList.querySelectorAll("li").forEach(li => {
+        const lines = li.innerText.split("\n");
+        data.push({
+            Chofer: lines[0],
+            Movil: lines[1].replace("Móvil: ", ""),
+            Turno: lines[2].replace("Turno: ", ""),
+            Fecha: lines[3].replace("Fecha: ", "")
+        });
+    });
+
+    const ws = XLSX.utils.json_to_sheet(data);
     const wb = XLSX.utils.book_new();
-    XLSX.utils.book_append_sheet(wb, ws, 'Datos');
-    XLSX.writeFile(wb, 'datos_turnos.xlsx');
-}
+    XLSX.utils.book_append_sheet(wb, ws, "Turnos");
 
-/* ================= EVENTOS ================= */
-
-window.addEventListener('load', loadAddedPeople);
-
-searchButton.addEventListener('click', searchNames);
-searchInput.addEventListener('input', searchNames);
-movilInput.addEventListener('input', searchMoviles);
-addButton.addEventListener('click', agregarDatos);
-guardarButton.addEventListener('click', guardarDatos);
+    XLSX.writeFile(wb, "turnos_sgsp.xlsx");
+});
