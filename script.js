@@ -795,11 +795,21 @@ function splitName(fullName) {
     };
 }
 
-// ================== BUSCADOR NOMBRES ==================
+//  valida si el formulario está completo
+function checkFormReady() {
+    if (selectedPerson && movilInput.value && turnoSelect.value && fechaInput.value) {
+        addButton.style.display = "block";
+    } else {
+        addButton.style.display = "none";
+    }
+}
+
+// BUSCADOR NOMBRES 
 searchInput.addEventListener("input", () => {
     const value = searchInput.value.toUpperCase().trim();
     searchResults.innerHTML = "";
     selectedPerson = null;
+    checkFormReady();
 
     if (!value) return;
 
@@ -813,8 +823,8 @@ searchInput.addEventListener("input", () => {
                 selectedPerson = person;
                 searchInput.value = person.Nombre;
                 searchResults.innerHTML = "";
-
                 turnoSelect.disabled = false;
+                checkFormReady();
             };
 
             searchResults.appendChild(div);
@@ -823,22 +833,18 @@ searchInput.addEventListener("input", () => {
 
 // ================== TURNO ==================
 turnoSelect.addEventListener("change", () => {
-    if (turnoSelect.value) {
-        fechaInput.disabled = false;
-    }
+    fechaInput.disabled = !turnoSelect.value;
+    checkFormReady();
 });
 
 // ================== FECHA ==================
-fechaInput.addEventListener("change", () => {
-    if (fechaInput.value) {
-        addButton.style.display = "block";
-    }
-});
+fechaInput.addEventListener("change", checkFormReady);
 
 // ================== BUSCADOR MÓVILES ==================
 movilInput.addEventListener("input", () => {
     const value = movilInput.value.toLowerCase().trim();
     movilResults.innerHTML = "";
+    checkFormReady();
 
     if (!value) return;
 
@@ -851,6 +857,7 @@ movilInput.addEventListener("input", () => {
             div.onclick = () => {
                 movilInput.value = movil;
                 movilResults.innerHTML = "";
+                checkFormReady();
             };
 
             movilResults.appendChild(div);
@@ -878,14 +885,12 @@ addButton.addEventListener("click", () => {
 
     renderAddedList();
 
-    // Reset
+    // Reset (SIN borrar la fecha)
     selectedPerson = null;
     searchInput.value = "";
     movilInput.value = "";
     turnoSelect.value = "";
     turnoSelect.disabled = true;
-    // fechaInput.value = "";
-     //fechaInput.disabled = true;
     addButton.style.display = "none";
 });
 
