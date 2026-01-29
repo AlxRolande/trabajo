@@ -785,6 +785,11 @@ const addedList = document.getElementById("addedList");
 let selectedPerson = null;
 let addedPeople = [];
 
+// 🔥 ESTADO INICIAL (IMPORTANTE)
+turnoSelect.disabled = false;
+fechaInput.disabled = false;
+addButton.style.display = "block";
+
 // ================== HELPERS ==================
 function splitName(fullName) {
     if (!fullName) return { firstName: "", lastName: "" };
@@ -859,7 +864,7 @@ addButton.addEventListener("click", () => {
 
     renderAddedList();
 
-    // 🔥 RESET SOLO DE ESTOS CAMPOS
+    // 🔥 RESET SOLO NOMBRE Y MÓVIL
     selectedPerson = null;
     searchInput.value = "";
     movilInput.value = "";
@@ -903,3 +908,4 @@ guardarButton.addEventListener("click", () => {
     XLSX.utils.book_append_sheet(wb, ws, "Datos");
     XLSX.writeFile(wb, "datos_turnos.xlsx");
 });
+
