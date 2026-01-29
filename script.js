@@ -886,7 +886,7 @@ addButton.addEventListener("click", () => {
     turnoSelect.value = "";
     turnoSelect.disabled = true;
     // fechaInput.value = "";
-    fechaInput.disabled = true;
+     //fechaInput.disabled = true;
     addButton.style.display = "none";
 });
 
