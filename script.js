@@ -755,7 +755,23 @@ const moviles = [
     "SMI5506-06",
     "SMI5338-038",
     "SMI1113-005",
-    "SMI3834-014"
+    "SMI3834-014",
+“SPN238”,
+“SPN404”,
+“SPN529”,
+“SPN509”,
+“SPN518”,
+“SPN526”,
+“SPN512”,
+“SPN514”,
+“SPN516”,
+“SPN523”,
+“SPN532”,
+“SPN524”,
+“SPN369”,
+“SPN390”,
+“SPN391”
+
 ];
 
 const searchInput = document.getElementById("searchInput");
@@ -869,7 +885,7 @@ addButton.addEventListener("click", () => {
     movilInput.value = "";
     turnoSelect.value = "";
     turnoSelect.disabled = true;
-    fechaInput.value = "";
+    // fechaInput.value = "";
     fechaInput.disabled = true;
     addButton.style.display = "none";
 });
