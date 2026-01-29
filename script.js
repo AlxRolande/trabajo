@@ -772,7 +772,6 @@ const moviles = [
     "SPN390",
     "SPN391"
 ];
-
 const searchInput = document.getElementById("searchInput");
 const searchResults = document.getElementById("searchResults");
 const turnoSelect = document.getElementById("turnoSelect");
@@ -788,6 +787,7 @@ let addedPeople = [];
 
 // ================== HELPERS ==================
 function splitName(fullName) {
+    if (!fullName) return { firstName: "", lastName: "" };
     const parts = fullName.split(" ");
     return {
         firstName: parts[0],
@@ -795,21 +795,11 @@ function splitName(fullName) {
     };
 }
 
-//  valida si el formulario está completo
-function checkFormReady() {
-    if (selectedPerson && movilInput.value && turnoSelect.value && fechaInput.value) {
-        addButton.style.display = "block";
-    } else {
-        addButton.style.display = "none";
-    }
-}
-
-// BUSCADOR NOMBRES 
+// ================== BUSCADOR NOMBRES ==================
 searchInput.addEventListener("input", () => {
     const value = searchInput.value.toUpperCase().trim();
     searchResults.innerHTML = "";
     selectedPerson = null;
-    checkFormReady();
 
     if (!value) return;
 
@@ -823,28 +813,16 @@ searchInput.addEventListener("input", () => {
                 selectedPerson = person;
                 searchInput.value = person.Nombre;
                 searchResults.innerHTML = "";
-                turnoSelect.disabled = false;
-                checkFormReady();
             };
 
             searchResults.appendChild(div);
         });
 });
 
-// ================== TURNO ==================
-turnoSelect.addEventListener("change", () => {
-    fechaInput.disabled = !turnoSelect.value;
-    checkFormReady();
-});
-
-// ================== FECHA ==================
-fechaInput.addEventListener("change", checkFormReady);
-
 // ================== BUSCADOR MÓVILES ==================
 movilInput.addEventListener("input", () => {
     const value = movilInput.value.toLowerCase().trim();
     movilResults.innerHTML = "";
-    checkFormReady();
 
     if (!value) return;
 
@@ -857,7 +835,6 @@ movilInput.addEventListener("input", () => {
             div.onclick = () => {
                 movilInput.value = movil;
                 movilResults.innerHTML = "";
-                checkFormReady();
             };
 
             movilResults.appendChild(div);
@@ -866,32 +843,26 @@ movilInput.addEventListener("input", () => {
 
 // ================== AGREGAR ==================
 addButton.addEventListener("click", () => {
-    if (!selectedPerson || !movilInput.value || !turnoSelect.value || !fechaInput.value) {
-        alert("Complete todos los campos");
-        return;
-    }
 
-    const { firstName, lastName } = splitName(selectedPerson.Nombre);
+    const nombreCompleto = selectedPerson ? selectedPerson.Nombre : searchInput.value;
+    const { firstName, lastName } = splitName(nombreCompleto);
 
     addedPeople.push({
-        Grado: selectedPerson.Grado,
-        Nombre: firstName,
-        Apellido: lastName,
-        "C.I": selectedPerson["C.I"],
-        Movil: movilInput.value,
-        Turno: turnoSelect.value,
-        Fecha: fechaInput.value
+        Grado: selectedPerson ? selectedPerson.Grado : "",
+        Nombre: firstName || "",
+        Apellido: lastName || "",
+        "C.I": selectedPerson ? selectedPerson["C.I"] : "",
+        Movil: movilInput.value || "",
+        Turno: turnoSelect.value || "",
+        Fecha: fechaInput.value || ""
     });
 
     renderAddedList();
 
-    // Reset (SIN borrar la fecha)
+    // 🔥 RESET SOLO DE ESTOS CAMPOS
     selectedPerson = null;
     searchInput.value = "";
     movilInput.value = "";
-    turnoSelect.value = "";
-    turnoSelect.disabled = true;
-    addButton.style.display = "none";
 });
 
 // ================== LISTA ==================
@@ -902,7 +873,7 @@ function renderAddedList() {
         const li = document.createElement("li");
         li.innerHTML = `
             ${p.Nombre} ${p.Apellido}<br>
-            Turno ${p.Turno} - ${p.Movil}
+            Turno: ${p.Turno || "-"} | Móvil: ${p.Movil || "-"} | Fecha: ${p.Fecha || "-"}
         `;
 
         const btn = document.createElement("button");
