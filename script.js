@@ -756,22 +756,21 @@ const moviles = [
     "SMI5338-038",
     "SMI1113-005",
     "SMI3834-014",
-“SPN238”,
-“SPN404”,
-“SPN529”,
-“SPN509”,
-“SPN518”,
-“SPN526”,
-“SPN512”,
-“SPN514”,
-“SPN516”,
-“SPN523”,
-“SPN532”,
-“SPN524”,
-“SPN369”,
-“SPN390”,
-“SPN391”
-
+    "SPN238",
+    "SPN404",
+    "SPN529",
+    "SPN509",
+    "SPN518",
+    "SPN526",
+    "SPN512",
+    "SPN514",
+    "SPN516",
+    "SPN523",
+    "SPN532",
+    "SPN524",
+    "SPN369",
+    "SPN390",
+    "SPN391"
 ];
 
 const searchInput = document.getElementById("searchInput");
