@@ -28,11 +28,11 @@
         <div id="searchResults" class="search-results"></div>
     </div>
 
-    <button id="searchButton">Buscar</button>
+    <button id="searchButton" type="button">Buscar</button>
 
-    <!-- ===== TURNO ===== -->
+    <!-- ===== TURNO (YA NO BLOQUEADO) ===== -->
     <label for="turnoSelect">Turno</label>
-    <select id="turnoSelect" disabled aria-label="Seleccionar turno">
+    <select id="turnoSelect" aria-label="Seleccionar turno">
         <option value="">Seleccione turno</option>
         <option value="1">Turno 1</option>
         <option value="2">Turno 2</option>
@@ -51,12 +51,13 @@
         <div id="movilResults" class="search-results"></div>
     </div>
 
-    <!-- ===== FECHA ===== -->
+    <!-- ===== FECHA (YA NO BLOQUEADA) ===== -->
     <label for="fechaInput">Fecha</label>
-    <input type="date" id="fechaInput" disabled>
+    <input type="date" id="fechaInput">
 
-    <button id="addButton" style="display:none;">Agregar</button>
-    <button id="guardarButton">Guardar y Descargar</button>
+    <!-- 🔥 SIEMPRE VISIBLE -->
+    <button id="addButton" type="button">Agregar</button>
+    <button id="guardarButton" type="button">Guardar y Descargar</button>
 </div>
 
 <div id="addedListContainer" style="display:none;">
@@ -64,7 +65,10 @@
     <ul id="addedList"></ul>
 </div>
 
+<!-- LIBRERÍA EXCEL -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
+
+<!-- TU SCRIPT -->
 <script src="script.js"></script>
 
 </body>
