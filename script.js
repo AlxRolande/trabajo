@@ -728,6 +728,11 @@ const data = [
         "Grado": 3,
         "Nombre": "ANIBAL ALVARIZA",
         "C.I": "37773791"
+    },
+    {
+        "Grado": 1,
+        "Nombre": "MANUEL MENDEZ",
+        "C.I": "52944995"
     }
     
 ];
@@ -756,6 +761,8 @@ const moviles = [
     "SMI5338-038",
     "SMI1113-005",
     "SMI3834-014",
+    "SMI5503-049",
+    "SMI5439-046",
     "SPN238",
     "SPN404",
     "SPN529",
